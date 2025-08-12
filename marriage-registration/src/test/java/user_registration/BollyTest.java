@@ -17,22 +17,24 @@ import org.openqa.selenium.support.ui.Select;
 
 public class BollyTest {
 	public static void main(String[] args) throws InterruptedException, IOException {
+//		get the java rep object of the physical file
+		FileInputStream fis = new FileInputStream("./src\\test\\resources\\cd.properties");
 
-//		step 1 -> get the java representation object of the physical file
-		FileInputStream fis = new FileInputStream("./src/test/resources/commonData.properties");
-
-//		step 2 -> Create the object of Properties class of java and load the keys
+//		load()
 		Properties pObj = new Properties();
 		pObj.load(fis);
 
-//		step - 3 -> get the value by using getProperty()
+//		getProperty()
 		String BROWSER = pObj.getProperty("bro");
 		String URL = pObj.getProperty("url");
-		String USER_NAME = pObj.getProperty("us_un");
-		String USER_PASSWORD = pObj.getProperty("us_pwd");
-		String ADMIN_NAME = pObj.getProperty("admin_un");
-		String ADMIN_PASSWORD = pObj.getProperty("admin_pwd");
- 
+//		uniform res loc
+//		universal res loc
+//		unified res loc
+		String USER_NAME = pObj.getProperty("user_un");
+		String USER_PASSWORD = pObj.getProperty("user_pwd");
+
+//		String BROWSER = "chrome"; 
+
 		WebDriver driver = null;
 
 		if (BROWSER.equals("chrome")) {
@@ -53,75 +55,90 @@ public class BollyTest {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
 //		Login
-		driver.get("http://49.249.28.218:8081/TestServer/Build/Online_Couple_Marriage_Registration_System/");
+		driver.get(URL);
 
 		driver.findElement(By.partialLinkText("User")).click();
 
 		WebElement mob = driver.findElement(By.name("mobno"));
-		mob.sendKeys("1234567890");
+		mob.sendKeys(USER_NAME);
 
 		WebElement pwd = driver.findElement(By.name("password"));
-		pwd.sendKeys("Test@123");
+		pwd.sendKeys(USER_PASSWORD);
 
 		driver.findElement(By.name("login")).click();
 
 //		Fill one reg form 
 		driver.findElement(By.xpath("//span[text()='Registration Form']")).click();
 
+		String dateofWedding = "08/15/2025";
 		WebElement dateOfWed = driver.findElement(By.name("dom"));
-		dateOfWed.sendKeys("08/15/2025");
+		dateOfWed.sendKeys(dateofWedding);
 
+		String hName = "Amitabh Bachchan";
 		WebElement hus = driver.findElement(By.name("nofhusband"));
-		hus.sendKeys("Amitabh Bachchan");
+		hus.sendKeys(hName);
 
+		String hPic = "C:\\Users\\User\\Basic_Selenium\\marriage-registration\\resources\\abpassport.jpeg";
 		WebElement husPic = driver.findElement(By.name("husimage"));
-		husPic.sendKeys("C:\\Users\\User\\Basic_Selenium\\marriage-registration\\resources\\abpassport.jpeg");
+		husPic.sendKeys(hPic);
 
+		String wName = "Jaya Bachchan";
 		WebElement wif = driver.findElement(By.name("nofwife"));
-		wif.sendKeys("Jaya Bachchan");
+		wif.sendKeys(wName);
 
+		String wPic = "C:\\Users\\User\\Basic_Selenium\\marriage-registration\\resources\\jbpassport.jpeg";
 		WebElement wifPic = driver.findElement(By.name("wifeimage"));
-		wifPic.sendKeys("C:\\Users\\User\\Basic_Selenium\\marriage-registration\\resources\\jbpassport.jpeg");
+		wifPic.sendKeys(wPic);
 
-		WebElement hrel = driver.findElement(By.name("hreligion"));
-		hrel.sendKeys("Hindu");
+		String hRel = "Hindu";
+		WebElement husrel = driver.findElement(By.name("hreligion"));
+		husrel.sendKeys(hRel);
 
-		WebElement wrel = driver.findElement(By.name("wreligion"));
-		wrel.sendKeys("Hindu");
+		String wRel = "Hindu";
+		WebElement wiferel = driver.findElement(By.name("wreligion"));
+		wiferel.sendKeys(wRel);
 
+		String hDob = "11/10/1942";
 		WebElement hdob = driver.findElement(By.name("hdob"));
-		hdob.sendKeys("11/10/1942");
+		hdob.sendKeys(hDob);
 
+		String wDob = "11/10/1948";
 		WebElement wdob = driver.findElement(By.name("wdob"));
-		wdob.sendKeys("11/10/1948");
+		wdob.sendKeys(wDob);
 
+		String hStatus = "Bachelor";
 		WebElement hwdDD = driver.findElement(By.name("hsbmarriage"));
 		Select selHus = new Select(hwdDD);
-		selHus.selectByIndex(1);
+		selHus.selectByVisibleText(hStatus);
 
+		String wStatus = "Bachelor";
 		WebElement wwdDD = driver.findElement(By.name("wsbmarriage"));
 		Select selWife = new Select(wwdDD);
-		selWife.selectByIndex(1);
+		selWife.selectByVisibleText(wStatus);
 
 		String add = "Jalsa, B/2, Kapol Housing Society, VL Mehta Road, Juhu Mumbai - 400049";
 
 		WebElement hAdd = driver.findElement(By.name("haddress"));
 		hAdd.sendKeys(add);
- 
+
 		WebElement wAdd = driver.findElement(By.name("waddress"));
 		wAdd.sendKeys(add);
 
+		String hZipcode = "400049";
 		WebElement hZip = driver.findElement(By.name("hzipcode"));
-		hZip.sendKeys("400049");
+		hZip.sendKeys(hZipcode);
 
+		String wZipcode = "400049";
 		WebElement wZip = driver.findElement(By.name("wzipcode"));
-		wZip.sendKeys("400049");
+		wZip.sendKeys(wZipcode);
 
-		WebElement hState = driver.findElement(By.name("hstate"));
-		hState.sendKeys("Maharashtra");
+		String hState = "Maharashtra";
+		WebElement husState = driver.findElement(By.name("hstate"));
+		husState.sendKeys(hState);
 
-		WebElement wState = driver.findElement(By.name("wstate"));
-		wState.sendKeys("Maharashtra");
+		String wState = "Maharashtra";
+		WebElement wifeState = driver.findElement(By.name("wstate"));
+		wifeState.sendKeys(wState);
 
 		String hadh = (int) (Math.random() * (999999999)) + "021";
 		String wadh = (int) (Math.random() * (999999999)) + "021";
@@ -132,23 +149,29 @@ public class BollyTest {
 		WebElement wAdhar = driver.findElement(By.name("wadharno"));
 		wAdhar.sendKeys(wadh);
 
+		String wit1Name = "Govinda";
 		WebElement wit1 = driver.findElement(By.name("witnessnamef"));
-		wit1.sendKeys("Govind");
+		wit1.sendKeys(wit1Name);
 
+		String wit1address = "Ashoknagar";
 		WebElement wit1add = driver.findElement(By.name("waddressfirst"));
-		wit1add.sendKeys("Ashoknagar");
+		wit1add.sendKeys(wit1address);
 
+		String wit2Name = "Namrata";
 		WebElement wit2 = driver.findElement(By.name("witnessnames"));
-		wit2.sendKeys("Namrata");
+		wit2.sendKeys(wit2Name);
 
+		String wit2Address = "Sector 3";
 		WebElement wit2add = driver.findElement(By.name("waddresssec"));
-		wit2add.sendKeys("Sector 3");
+		wit2add.sendKeys(wit2Address);
 
+		String wit3Name = "Pankaj";
 		WebElement wit3 = driver.findElement(By.name("witnessnamet"));
-		wit3.sendKeys("Pankaj");
+		wit3.sendKeys(wit3Name);
 
+		String wit3Address = "Sector 18";
 		WebElement wit3add = driver.findElement(By.name("waddressthird"));
-		wit3add.sendKeys("Sonipat");
+		wit3add.sendKeys(wit3Address);
 
 		driver.findElement(By.id("submit")).click();
 
