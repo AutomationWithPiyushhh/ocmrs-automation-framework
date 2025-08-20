@@ -13,14 +13,13 @@ public class GetDataFromJsonFile {
 		FileReader fr = new FileReader("C:\\Users\\User\\git\\ocmrs\\marriage-registration\\src\\test\\resources\\commondata.json");
 		
 		JSONParser parser = new JSONParser();
-		
 		Object obj = parser.parse(fr);
 		
-		JSONObject jObj = (JSONObject) obj;
+		JSONObject jObj = (JSONObject) obj ;
 		
-//		String value2 = (String) jObj.get("key2");
-		String value2 = jObj.get("key2").toString();
-		
-		System.out.println(value2);
+		String mob = jObj.get("key1").toString();
+		String name = jObj.get("key2").toString();
+		System.out.println(mob);
+		System.out.println(name);
 	}
-}	
+}
